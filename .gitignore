@@ -1,0 +1,4 @@
+# List files & folders to ignore here.
+
+# Mac-specific files
+.DS_Store
