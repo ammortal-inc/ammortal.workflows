@@ -35,6 +35,10 @@ jobs:
                     # Save new name as output variable of this job
                     echo "branch_name_safe=${BRANCH_NAME_SAFE}" >> "$GITHUB_OUTPUT"
 
+            -   name: Print Safe Branch Name
+                run: |
+                    echo "Safe branch name: ${{ steps.branch-names-safe.outputs.branch_name_safe }}"
+
     build-push-docker-image:
         runs-on: ubuntu-latest
         needs: extract-branch-name-safe
