@@ -18,6 +18,7 @@ jobs:
             commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}
             commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}
             version: ${{ steps.version.outputs.version }}
+            version_safe: ${{ steps.version.outputs.version_safe }}
         steps:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
@@ -51,6 +52,9 @@ jobs:
                 run: |
                     VERSION=0.0.0+${{ steps.commit-hash.outputs.commit_hash_short }}
                     echo "version=${VERSION}" >> $GITHUB_OUTPUT
+                    # Replace `+` with `_` for a docker-safe build tag
+                    VERSION_SAFE="${VERSION//+/_}"
+                    echo "version_safe=${VERSION_SAFE}" >> $GITHUB_OUTPUT
 
             -   name: Print Metadata
                 run: |
@@ -112,4 +116,4 @@ jobs:
                         ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.branch_name_safe }}
                         ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.version }}
                     build-args: |
-                        VERSION=${{ needs.extract-metadata.outputs.version }}
+                        VERSION=${{ needs.extract-metadata.outputs.version_safe }}
