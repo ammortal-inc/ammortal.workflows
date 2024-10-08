@@ -10,16 +10,18 @@ on:
                 default: false
 
 jobs:
-    extract-branch-name-safe:
+    extract-metadata:
         runs-on: ubuntu-latest
         outputs:
+            branch_name: ${{ steps.branch-names-safe.outputs.branch_name }}
             branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}
+            commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}
+            commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}
+            version: ${{ steps.version.outputs.version }}
+            version_safe: ${{ steps.version.outputs.version_safe }}
         steps:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
-                with:
-                    submodules: 'recursive'
-                    lfs: true
             
             -   name: Extract Branch Name
                 id: branch-names
@@ -30,18 +32,42 @@ jobs:
                 run: |
                     # Get current branch
                     BRANCH_NAME="${{steps.branch-names.outputs.current_branch}}"
+                    # Save unsafe branch name
+                    echo "branch_name=${BRANCH_NAME}" >> "$GITHUB_OUTPUT"
                     # Replace slash with underscore
                     BRANCH_NAME_SAFE="${BRANCH_NAME//\//_}"
                     # Save new name as output variable of this job
                     echo "branch_name_safe=${BRANCH_NAME_SAFE}" >> "$GITHUB_OUTPUT"
 
-            -   name: Print Safe Branch Name
+            -   name: Extract Commit Hashes
+                id: commit-hash
                 run: |
-                    echo "Safe branch name: ${{ steps.branch-names-safe.outputs.branch_name_safe }}"
+                    COMMIT_HASH=$(git rev-parse "$GITHUB_SHA")
+                    echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
+                    COMMIT_HASH_SHORT=$(git rev-parse --short "$GITHUB_SHA")
+                    echo "commit_hash_short=${COMMIT_HASH_SHORT}" >> $GITHUB_OUTPUT
+            
+            -   name: Extract Version
+                id: version
+                run: |
+                    VERSION=0.0.0+${{ steps.commit-hash.outputs.commit_hash_short }}
+                    echo "version=${VERSION}" >> $GITHUB_OUTPUT
+                    # Replace `+` with `_` for a docker-safe build tag
+                    VERSION_SAFE="${VERSION//\+/_}"
+                    echo "version_safe=${VERSION_SAFE}" >> $GITHUB_OUTPUT
+
+            -   name: Print Metadata
+                run: |
+                    echo "branch_name: ${{ steps.branch-names-safe.outputs.branch_name }}"
+                    echo "branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}"
+                    echo "commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}"
+                    echo "commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}"
+                    echo "version: ${{ steps.version.outputs.version }}"
+                    echo "version_safe: ${{ steps.version.outputs.version_safe }}"
 
     build-push-docker-image:
         runs-on: ubuntu-latest
-        needs: extract-branch-name-safe
+        needs: extract-metadata
         steps:
 
             -   name: Checkout Repository
@@ -74,7 +100,7 @@ jobs:
                 
             -   name: Print Image Name
                 run: |
-                    echo "Building image ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-branch-name-safe.outputs.branch_name_safe }} ..."
+                    echo "Building image ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.branch_name_safe }} ..."
 
             -   name: Setup Docker Buildx
                 uses: docker/setup-buildx-action@v3
@@ -87,4 +113,8 @@ jobs:
                     context: .
                     platforms: linux/arm64
                     push: true
-                    tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-branch-name-safe.outputs.branch_name_safe }}
+                    tags: |
+                        ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.branch_name_safe }}
+                        ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.version_safe }}
+                    build-args: |
+                        VERSION=${{ needs.extract-metadata.outputs.version }}
