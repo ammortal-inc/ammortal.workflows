@@ -63,6 +63,7 @@ jobs:
                     echo "commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}"
                     echo "commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}"
                     echo "version: ${{ steps.version.outputs.version }}"
+                    echo "version_safe: ${{ steps.version.outputs.version_safe }}"
 
     build-push-docker-image:
         runs-on: ubuntu-latest
