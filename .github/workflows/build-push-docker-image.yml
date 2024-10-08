@@ -38,10 +38,6 @@ jobs:
                     # Save new name as output variable of this job
                     echo "branch_name_safe=${BRANCH_NAME_SAFE}" >> "$GITHUB_OUTPUT"
 
-            -   name: Print Safe Branch Name
-                run: |
-                    echo "Safe branch name: ${{ steps.branch-names-safe.outputs.branch_name_safe }}"
-
             -   name: Extract Commit Hashes
                 id: commit-hash
                 run: |
@@ -55,6 +51,14 @@ jobs:
                 run: |
                     VERSION=0.0.0+${{ steps.commit-hash.outputs.commit_hash_short }}
                     echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+            -   name: Print Metadata
+                run: |
+                    echo "branch_name: ${{ steps.branch-names-safe.outputs.branch_name }}"
+                    echo "branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}"
+                    echo "commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}"
+                    echo "commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}"
+                    echo "version: ${{ steps.version.outputs.version }}"
 
     build-push-docker-image:
         runs-on: ubuntu-latest
