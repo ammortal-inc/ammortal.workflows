@@ -117,4 +117,4 @@ jobs:
                         ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.branch_name_safe }}
                         ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.version_safe }}
                     build-args: |
-                        VERSION=${{ needs.extract-metadata.outputs.version_safe }}
+                        VERSION=${{ needs.extract-metadata.outputs.version }}
