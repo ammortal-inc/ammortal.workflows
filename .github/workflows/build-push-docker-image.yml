@@ -60,7 +60,7 @@ jobs:
             -   name: Extract Version
                 if: ${{ steps.version.outputs.nextRelease.version != '' }}
                 run: |
-                    VERSION=0.0.0+${{ steps.commit-hash.outputs.commit_hash_short }}
+                    VERSION=${{ steps.version.outputs.nextRelease.version }}+${{ steps.commit-hash.outputs.commit_hash_short }}
                     echo "version=${VERSION}" >> $GITHUB_OUTPUT
                     # Replace `+` with `_` for a docker-safe build tag
                     VERSION_SAFE="${VERSION//\+/_}"
