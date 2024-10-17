@@ -58,6 +58,7 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
             -   name: Extract Version
+                if: ${{ steps.version.outputs.nextRelease.version != '' }}
                 run: |
                     VERSION=0.0.0+${{ steps.commit-hash.outputs.commit_hash_short }}
                     echo "version=${VERSION}" >> $GITHUB_OUTPUT
