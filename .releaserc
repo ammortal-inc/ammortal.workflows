@@ -14,8 +14,13 @@
           {
             "assets": 
             [
-              "src/*.py",
-              "CHANGELOG.md"
+              "CHANGELOG.md",
+              "src/**/*.{py}",
+              "static/**/*.{js,html,css}",
+              "sessions/**/*",
+              "pre_sessions/**/*",
+              "music/**/*",
+              "guides/**/*"
             ]
           }
         ],
