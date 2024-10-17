@@ -50,9 +50,14 @@ jobs:
                     echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
                     COMMIT_HASH_SHORT=${COMMIT_HASH:0:7}
                     echo "commit_hash_short=${COMMIT_HASH_SHORT}" >> $GITHUB_OUTPUT
+
+            -   name: Run Semantic Release
+                id: version
+                run: npx semantic-release
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
             -   name: Extract Version
-                id: version
                 run: |
                     VERSION=0.0.0+${{ steps.commit-hash.outputs.commit_hash_short }}
                     echo "version=${VERSION}" >> $GITHUB_OUTPUT
