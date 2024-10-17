@@ -1,5 +1,5 @@
 {
-    "branches": ["prod"],
+    "branches": ["main"],
     "plugins": [
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
@@ -25,11 +25,8 @@
           }
         ],
         [
-          "@semantic-release/exec", 
-          {
-            "publishCmd": "./update_version.sh ${nextRelease.version}"
-          }
+          "@semantic-release/exec"
         ]
     ],
-    "tagFormat": "${version}"
+    "tagFormat": "${version}-rc"
   }
