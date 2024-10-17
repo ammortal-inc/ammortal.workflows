@@ -46,6 +46,7 @@ jobs:
                         COMMIT_HASH=${{ github.event.pull_request.head.sha }}
                     else
                         COMMIT_HASH=${GITHUB_SHA}
+                    fi
                     echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
                     COMMIT_HASH_SHORT=${COMMIT_HASH:0:7}
                     echo "commit_hash_short=${COMMIT_HASH_SHORT}" >> $GITHUB_OUTPUT
