@@ -1,0 +1,32 @@
+{
+    "branches": ["main"],
+    "plugins": [
+        "@semantic-release/commit-analyzer",
+        "@semantic-release/release-notes-generator",
+        [
+          "@semantic-release/changelog",
+          {
+            "changelogFile": "CHANGELOG.md"
+          }
+        ],
+        [
+          "@semantic-release/git",
+          {
+            "assets": 
+            [
+              "CHANGELOG.md",
+              "src/**/*.{py}",
+              "static/**/*.{js,html,css}",
+              "sessions/**/*",
+              "pre_sessions/**/*",
+              "music/**/*",
+              "guides/**/*"
+            ]
+          }
+        ],
+        [
+          "@semantic-release/exec"
+        ]
+    ],
+    "tagFormat": "${version}-rc"
+  }
