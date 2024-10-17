@@ -42,9 +42,13 @@ jobs:
             -   name: Extract Commit Hashes
                 id: commit-hash
                 run: |
-                    COMMIT_HASH=$(git rev-parse "$GITHUB_SHA")
+                    if [ -n "${{ github.event.pull_request }}" ]; then
+                        COMMIT_HASH=${{ github.event.pull_request.head.sha }}
+                    else
+                        COMMIT_HASH=${GITHUB_SHA}
+                    fi
                     echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
-                    COMMIT_HASH_SHORT=$(git rev-parse --short "$GITHUB_SHA")
+                    COMMIT_HASH_SHORT=${COMMIT_HASH:0:7}
                     echo "commit_hash_short=${COMMIT_HASH_SHORT}" >> $GITHUB_OUTPUT
             
             -   name: Extract Version
