@@ -11,11 +11,11 @@ on:
 
 jobs:
     extract-metadata:
-        runs-on: ubuntu-latest
         permissions:
             contents: write
             issues: write
             pull-requests: write
+        runs-on: ubuntu-latest
         outputs:
             branch_name: ${{ steps.branch-names-safe.outputs.branch_name }}
             branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}
