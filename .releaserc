@@ -23,15 +23,7 @@
               "guides/**/*"
             ]
           }
-        ],
-        [
-          "@semantic-release/exec"
-        ],
-        ["@semantic-release/github", {
-          "failComment": false,
-          "failTitle": false,
-          "labels": false
-        }]
+        ]
     ],
     "tagFormat": "${version}-rc"
   }
