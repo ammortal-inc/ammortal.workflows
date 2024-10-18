@@ -65,6 +65,13 @@ jobs:
                 run: npx semantic-release
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Debug Semantic Release Output
+                run: cat .releaserc.json || echo "No .releaserc.json found"
+                continue-on-error: true
+
+            -   name: Check Semantic Release Output
+                run: ls -la
             
             -   name: Extract Version
                 id: extract-version
