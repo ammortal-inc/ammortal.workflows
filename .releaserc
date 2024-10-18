@@ -31,5 +31,5 @@
           }
         ]
     ],
-    "tagFormat": "${version}-rc"
+    "tagFormat": "${version}"
   }
