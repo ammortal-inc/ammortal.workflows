@@ -12,6 +12,10 @@ on:
 jobs:
     extract-metadata:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
         outputs:
             branch_name: ${{ steps.branch-names-safe.outputs.branch_name }}
             branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}
@@ -60,7 +64,7 @@ jobs:
                 id: version
                 run: npx semantic-release
                 env:
-                    GITHUB_TOKEN: ${{ secrets.GH_ACTION_READ_REPO_WRITE_PACAKGE }}
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
             -   name: Extract Version
                 if: ${{ steps.version.outputs.nextRelease.version != '' }}
