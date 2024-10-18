@@ -36,7 +36,7 @@ jobs:
                 id: branch-names-safe
                 run: |
                     # Get current branch
-                    BRANCH_NAME="${{steps.branch-names.outputs.current_branch}}"
+                    BRANCH_NAME="${{ steps.branch-names.outputs.current_branch }}"
                     # Save unsafe branch name
                     echo "branch_name=${BRANCH_NAME}" >> "$GITHUB_OUTPUT"
                     # Replace slash with underscore
@@ -60,7 +60,7 @@ jobs:
                 id: version
                 run: npx semantic-release
                 env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    GITHUB_TOKEN: ${{ secrets.GH_ACTION_READ_REPO_WRITE_PACAKGE }}
             
             -   name: Extract Version
                 if: ${{ steps.version.outputs.nextRelease.version != '' }}
