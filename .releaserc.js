@@ -52,6 +52,12 @@ module.exports = {
         assets: assets, 
       },
     ],
+    [
+      "@semantic-release/exec",
+      {
+        publishCmd: "echo 'Next release version: ${nextRelease.version}'"
+      }
+    ]
   ],
   tagFormat: tagFormat
 };
