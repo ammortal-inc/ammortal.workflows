@@ -65,6 +65,7 @@ jobs:
                 run: npx semantic-release
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    REPO_NAME: ${{ github.repository }}
 
             -   name: Debug Semantic Release Output
                 run: cat .releaserc.json || echo "No .releaserc.json found"
