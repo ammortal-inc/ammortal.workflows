@@ -66,6 +66,7 @@ jobs:
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_NAME: ${{ github.repository }}
+                    BRANCH_NAME: ${{ steps.branch-names-safe.outputs.branch_name }}
 
             -   name: Debug Semantic Release Output
                 run: cat .releaserc.json || echo "No .releaserc.json found"
