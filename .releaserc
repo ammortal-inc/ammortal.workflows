@@ -1,5 +1,14 @@
 {
-    "branches": ["main"],
+    "branches": [
+      {
+        "name": "prod",
+        "tagFormat": "${version}"
+      },
+      {
+        "name": "main",
+        "tagFormat": "${version}-rc"
+      }
+    ],
     "plugins": [
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
@@ -24,6 +33,5 @@
             ]
           }
         ]
-    ],
-    "tagFormat": "${version}"
+    ]
   }
