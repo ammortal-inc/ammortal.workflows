@@ -91,8 +91,8 @@ jobs:
                     echo "branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}"
                     echo "commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}"
                     echo "commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}"
-                    echo "version: ${VERSION}"
-                    echo "version_safe: ${VERSION_SAFE}"
+                    echo "version: ${steps.extract-version.version}"
+                    echo "version_safe: ${steps.extract-version.version_safe}"
 
     build-push-docker-image:
         runs-on: ubuntu-latest
