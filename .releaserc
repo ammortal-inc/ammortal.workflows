@@ -23,12 +23,6 @@
       {
         "assets": []
       }
-    ],
-        [
-      "@semantic-release/github",
-      {
-        "assets": []
-      }
     ]
   ]
 }
