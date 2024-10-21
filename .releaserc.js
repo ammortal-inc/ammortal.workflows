@@ -5,14 +5,20 @@ let assets;
 let tagFormat;
 
 switch (repoName) {
-  case 'repo1':
-    assets = ['CHANGELOG.md', 'file1.txt'];
+  case 'chamber.a4.backend.test.semantic.release':
+    assets = ['CHANGELOG.md', 'src/**/*.{py}'];
     break;
-  case 'repo2':
-    assets = ['CHANGELOG.md', 'file2.txt'];
+  case 'chamber.a4.assets.test.semantic.release':
+    assets = [
+      'CHANGELOG.md', 
+      'sessions/**/*',
+      'pre_sessions/**/*',
+      'music/**/*',
+      'guides/**/*'
+    ];
     break;
-  case 'repo3':
-    assets = ['CHANGELOG.md', 'file3.txt'];
+  case 'chamber.a4.frontend.test.semantic.release':
+    assets = ['CHANGELOG.md', 'static/**/*.{js,html,css}'];
     break;
   default:
     assets = ['CHANGELOG.md'];
