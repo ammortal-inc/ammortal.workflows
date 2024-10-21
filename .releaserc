@@ -21,16 +21,7 @@
         [
           "@semantic-release/git",
           {
-            "assets": 
-            [
-              "CHANGELOG.md",
-              "src/**/*.{py}",
-              "static/**/*.{js,html,css}",
-              "sessions/**/*",
-              "pre_sessions/**/*",
-              "music/**/*",
-              "guides/**/*"
-            ]
+            "assets": []
           }
         ]
     ]
