@@ -35,10 +35,11 @@ jobs:
 
             -   name: Copy common files
                 run: |
-                    cp ammortal-workflows/.releaserc.js ./
-                    cp ammortal-workflows/package.json ./
+                    mkdir release
+                    cp ammortal-workflows/.releaserc.js ./release/
+                    cp ammortal-workflows/package.json ./release/
                     PACKAGE_NAME=${{ github.repository }}
-                    cat package.json | jq '. += {"name" : "${PACKAGE_NAME}" }'
+                    cat release/package.json | jq '. += {"name" : "${PACKAGE_NAME}" }'
             
             -   name: Setup Node.js
                 uses: actions/setup-node@v3
@@ -78,7 +79,7 @@ jobs:
 
             -   name: Run Semantic Release
                 id: version
-                run: npx semantic-release --debug
+                run: npx semantic-release --debug -e ./release/.releaserc.js
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_NAME: ${{ github.repository }}

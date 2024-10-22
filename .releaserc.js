@@ -11,7 +11,6 @@ switch (repoName) {
     break;
   case 'chamber.a4.assets.test.semantic.release':
     assets = [
-      'CHANGELOG.md', 
       'sessions/**/*',
       'pre_sessions/**/*',
       'music/**/*',
@@ -19,10 +18,10 @@ switch (repoName) {
     ];
     break;
   case 'chamber.a4.frontend.test.semantic.release':
-    assets = ['CHANGELOG.md', 'static/**/*.{js,html,css}'];
+    assets = ['static/**/*.{js,html,css}'];
     break;
   default:
-    assets = ['CHANGELOG.md'];
+    assets = [];
 }
 
 switch (branchName) {
@@ -32,11 +31,11 @@ switch (branchName) {
     break;
   case 'prod':
     tagFormat = '${version}';
-    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}-rc\"}' > version.json"
+    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"}' > version.json"
     break;
   default:
     tagFormat = '${version}';
-    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}-rc\"}' > version.json"
+    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"}' > version.json"
 }
 
 module.exports = {
