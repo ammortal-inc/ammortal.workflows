@@ -70,7 +70,8 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_NAME: ${{ github.repository }}
                     BRANCH_NAME: ${{ steps.branch-names-safe.outputs.branch_name }}
-                run: npx semantic-release --debug
+                run: | 
+                    npx semantic-release --debug
 
             -   name: Debug Semantic Release Output
                 run: cat .releaserc.json || echo "No .releaserc.json found"
@@ -79,13 +80,13 @@ jobs:
             -   name: Check Semantic Release Output
                 run: |
                     ls -la
-                    echo "Next Release: ${{ steps.version.outputs.nextRelease }}"
+                    echo "Next Release: $(cat version.json)"
             
             -   name: Extract Version
                 id: extract-version
-                if: ${{ steps.version.outputs.nextRelease != '' }}
                 run: |
-                    VERSION=${{ steps.version.outputs.nextRelease.version }}+${{ steps.commit-hash.outputs.commit_hash_short }}
+                    VERSION=$(cat version.json | jq -r '.nextReleaseVersion')+${{ steps.commit-hash.outputs.commit_hash_short }}
+                    # VERSION=${{ steps.version.outputs.nextRelease.version }}+${{ steps.commit-hash.outputs.commit_hash_short }}
                     echo "version=${VERSION}" >> $GITHUB_ENV
                     # Replace `+` with `_` for a docker-safe build tag
                     VERSION_SAFE="${VERSION//\+/_}"
@@ -99,7 +100,6 @@ jobs:
                     echo "commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}"
                     echo "version: ${{ steps.extract-version.outputs.version }}"
                     echo "version_safe: ${{ steps.extract-version.outputs.version_safe }}"
-                    echo "next_release: ${{ steps.version.outputs }}"
 
     build-push-docker-image:
         runs-on: ubuntu-latest
