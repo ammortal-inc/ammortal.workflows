@@ -1,7 +1,6 @@
 const repoAssets = process.env.REPO_ASSETS;
 const branchName = process.env.BRANCH_NAME;
 
-let assets;
 let tagFormat;
 let nextReleaseVersion;
 
