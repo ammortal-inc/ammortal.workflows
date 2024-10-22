@@ -26,6 +26,9 @@ jobs:
         steps:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
+
+            -   name: Copy .releaserc.js
+                run: cp ../../.releaserc.js ./
             
             -   name: Setup Node.js
                 uses: actions/setup-node@v3
@@ -71,10 +74,6 @@ jobs:
                     BRANCH_NAME: ${{ steps.branch-names-safe.outputs.branch_name }}
                 run: | 
                     npx semantic-release --debug
-
-            -   name: Debug Semantic Release Output
-                run: cat .releaserc.json || echo "No .releaserc.json found"
-                continue-on-error: true
 
             -   name: Check Semantic Release Output
                 run: |
