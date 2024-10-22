@@ -84,9 +84,8 @@ jobs:
                 run: npx semantic-release --debug -e ./release/.releaserc.js
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    REPO_ASSETS: ASSETS
+                    REPO_ASSETS: "$(jq -r '.assets' .semrel.json)"
                     BRANCH_NAME: ${{ steps.branch-names-safe.outputs.branch_name }}
-
 
             -   name: Check Semantic Release Output
                 run: |
