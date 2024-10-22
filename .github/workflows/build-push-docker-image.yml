@@ -65,7 +65,7 @@ jobs:
                 id: version
                 run: |
                     npx semantic-release
-                    echo "Next Release: ${{ steps.version.outputs.nextRelease }}"
+                    
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_NAME: ${{ github.repository }}
@@ -77,7 +77,9 @@ jobs:
                 continue-on-error: true
 
             -   name: Check Semantic Release Output
-                run: ls -la
+                run: |
+                    ls -la
+                    echo "Next Release: ${{ steps.version.outputs.nextRelease }}"
             
             -   name: Extract Version
                 id: extract-version
