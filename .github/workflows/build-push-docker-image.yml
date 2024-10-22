@@ -63,14 +63,11 @@ jobs:
 
             -   name: Run Semantic Release
                 id: version
-                run: |
-                    npx semantic-release
-                    
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_NAME: ${{ github.repository }}
                     BRANCH_NAME: ${{ steps.branch-names-safe.outputs.branch_name }}
-                
+                run: npx semantic-release --debug
 
             -   name: Debug Semantic Release Output
                 run: cat .releaserc.json || echo "No .releaserc.json found"
@@ -99,7 +96,7 @@ jobs:
                     echo "commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}"
                     echo "version: ${{ steps.extract-version.outputs.version }}"
                     echo "version_safe: ${{ steps.extract-version.outputs.version_safe }}"
-                    echo "next_release: ${{ steps.version.outputs.nextRelease }}"
+                    echo "next_release: ${{ steps.version.outputs }}"
 
     build-push-docker-image:
         runs-on: ubuntu-latest
