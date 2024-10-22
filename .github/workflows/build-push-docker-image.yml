@@ -95,9 +95,8 @@ jobs:
             -   name: Extract Version
                 id: extract-version
                 run: |
-                    VERSION=$(cat version.json | jq -r '.nextReleaseVersion' version.json || echo "")
+                    VERSION=$(cat version.json | jq -r '.nextReleaseVersion' version.json || echo "")+${{ steps.commit-hash.outputs.commit_hash_short }}"
                     if [ -n "$VERSION" ]; then
-                        VERSION="${VERSION}+${{ steps.commit-hash.outputs.commit_hash_short }}"
                         echo "version=${VERSION}" >> $GITHUB_ENV
                         # Replace `+` with `_` for a docker-safe build tag
                         VERSION_SAFE="${VERSION//\+/_}"
@@ -165,6 +164,6 @@ jobs:
                     push: true
                     tags: |
                         ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.branch_name_safe }}
-                        ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.version_safe }}
+                        ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ needs.extract-metadata.outputs.version_safe || ''}}
                     build-args: |
                         VERSION=${{ needs.extract-metadata.outputs.version }}
