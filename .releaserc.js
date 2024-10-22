@@ -55,7 +55,7 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        publishCmd: "echo '{\"nextReleaseVersion\": \"${nextRelease.version}$( [ ${process.env.BRANCH_NAME} != prod ] && echo -rc)\"}' > version.json"
+        publishCmd: "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"+\"$( [ ${process.env.BRANCH_NAME} != prod ] && echo -rc)\"}' > version.json"
       }
     ]
   ],
