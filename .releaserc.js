@@ -3,6 +3,7 @@ const branchName = process.env.BRANCH_NAME;
 
 let assets;
 let tagFormat;
+let nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"}' > version.json";
 
 switch (repoName) {
   case 'chamber.a4.backend.test.semantic.release':
@@ -55,7 +56,7 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        publishCmd: "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"+\"$( [ ${process.env.BRANCH_NAME} != prod ] && echo -rc)\"}' > version.json"
+        publishCmd: nextReleaseVersion
       }
     ]
   ],
