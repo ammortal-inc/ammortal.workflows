@@ -95,8 +95,9 @@ jobs:
             -   name: Extract Version
                 id: extract-version
                 run: |
-                    VERSION=$(cat version.json | jq -r '.nextReleaseVersion' version.json || echo "")+${{ steps.commit-hash.outputs.commit_hash_short }}
+                    VERSION=$(cat version.json | jq -r '.nextReleaseVersion' version.json || echo "")
                     if [ -n "$VERSION" ]; then
+                        VERSION="${VERSION}+${{ steps.commit-hash.outputs.commit_hash_short }}"
                         echo "version=${VERSION}" >> $GITHUB_ENV
                         # Replace `+` with `_` for a docker-safe build tag
                         VERSION_SAFE="${VERSION//\+/_}"
