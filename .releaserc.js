@@ -1,29 +1,8 @@
-const repoName = process.env.REPO_NAME;
 const repoAssets = process.env.REPO_ASSETS;
 const branchName = process.env.BRANCH_NAME;
 
-let assets;
 let tagFormat;
 let nextReleaseVersion;
-
-switch (repoName) {
-  case 'chamber.a4.backend.test.semantic.release':
-    assets = ['src/**/*.{py}'];
-    break;
-  case 'chamber.a4.assets.test.semantic.release':
-    assets = [
-      'sessions/**/*',
-      'pre_sessions/**/*',
-      'music/**/*',
-      'guides/**/*'
-    ];
-    break;
-  case 'chamber.a4.frontend.test.semantic.release':
-    assets = ['static/**/*.{js,html,css}'];
-    break;
-  default:
-    assets = [];
-}
 
 switch (branchName) {
   case 'main':
