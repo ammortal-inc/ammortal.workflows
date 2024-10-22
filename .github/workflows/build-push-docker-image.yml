@@ -33,8 +33,12 @@ jobs:
                     repository: ammortal-inc/ammortal.workflows
                     path: ammortal-workflows
 
-            -   name: Copy .releaserc.js
-                run: cp ammortal-workflows/.releaserc.js ./
+            -   name: Copy common files
+                run: |
+                    cp ammortal-workflows/.releaserc.js ./
+                    cp ammortal-workflows/package.json ./
+                    PACKAGE_NAME=${{ github.repository }}
+                    echo "name=${PACKAGE_NAME}" > package.json
             
             -   name: Setup Node.js
                 uses: actions/setup-node@v3
