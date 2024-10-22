@@ -84,7 +84,6 @@ jobs:
                 run: npx semantic-release --debug -e ./release/.releaserc.js
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    REPO_NAME: ${{ github.repository }}
                     REPO_ASSETS: ASSETS
                     BRANCH_NAME: ${{ steps.branch-names-safe.outputs.branch_name }}
 
