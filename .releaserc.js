@@ -7,7 +7,7 @@ let nextReleaseVersion;
 
 switch (repoName) {
   case 'chamber.a4.backend.test.semantic.release':
-    assets = ['CHANGELOG.md', 'src/**/*.{py}'];
+    assets = ['src/**/*.{py}'];
     break;
   case 'chamber.a4.assets.test.semantic.release':
     assets = [

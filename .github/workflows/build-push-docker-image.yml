@@ -33,7 +33,7 @@ jobs:
                     repository: ammortal-inc/ammortal.workflows
                     path: ammortal-workflows
 
-            -   name: Copy common files
+            -   name: Copy Common Files To Release Directory
                 run: |
                     mkdir release
                     cp ammortal-workflows/.releaserc.js ./release/
