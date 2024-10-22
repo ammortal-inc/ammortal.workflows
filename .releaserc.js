@@ -1,4 +1,5 @@
 const repoName = process.env.REPO_NAME;
+const repoAssets = process.env.REPO_ASSETS;
 const branchName = process.env.BRANCH_NAME;
 
 let assets;
@@ -52,7 +53,7 @@ module.exports = {
     [
       '@semantic-release/git',
       {
-        assets: assets, 
+        assets: repoAssets, 
       },
     ],
     [
