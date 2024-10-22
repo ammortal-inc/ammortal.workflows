@@ -38,7 +38,7 @@ jobs:
                     cp ammortal-workflows/.releaserc.js ./
                     cp ammortal-workflows/package.json ./
                     PACKAGE_NAME=${{ github.repository }}
-                    echo "name=${PACKAGE_NAME}" > package.json
+                    cat package.json | jq '. += {"name" : "${PACKAGE_NAME}" }'
             
             -   name: Setup Node.js
                 uses: actions/setup-node@v3
