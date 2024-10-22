@@ -3,7 +3,7 @@ const branchName = process.env.BRANCH_NAME;
 
 let assets;
 let tagFormat;
-let nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"}' > version.json";
+let nextReleaseVersion;
 
 switch (repoName) {
   case 'chamber.a4.backend.test.semantic.release':
@@ -28,12 +28,15 @@ switch (repoName) {
 switch (branchName) {
   case 'main':
     tagFormat = '${version}-rc';
+    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}-rc\"}' > version.json"
     break;
   case 'prod':
     tagFormat = '${version}';
+    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}-rc\"}' > version.json"
     break;
   default:
     tagFormat = '${version}';
+    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}-rc\"}' > version.json"
 }
 
 module.exports = {
