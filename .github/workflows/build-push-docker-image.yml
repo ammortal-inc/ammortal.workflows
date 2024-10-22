@@ -27,8 +27,14 @@ jobs:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
 
+            -   name: Checkout ammortal.workflows repository
+                uses: actions/checkout@v3
+                with:
+                    repository: ammortal-inc/ammortal.workflows
+                    path: ammortal-workflows
+
             -   name: Copy .releaserc.js
-                run: cp ../../.releaserc.js ./
+                run: cp ammortal-workflows/.releaserc.js ./
             
             -   name: Setup Node.js
                 uses: actions/setup-node@v3
