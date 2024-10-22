@@ -75,7 +75,9 @@ jobs:
                     echo "commit_hash_short=${COMMIT_HASH_SHORT}" >> $GITHUB_OUTPUT
 
             -   name: Install dependencies
-                run: npm install
+                run: |
+                    cd release
+                    npm install
 
             -   name: Run Semantic Release
                 id: version
