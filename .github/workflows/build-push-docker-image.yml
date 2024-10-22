@@ -89,9 +89,6 @@ jobs:
                     # Replace `+` with `_` for a docker-safe build tag
                     VERSION_SAFE="${VERSION//\+/_}"
                     echo "version_safe=${VERSION_SAFE}" >> $GITHUB_ENV
-            
-            -   name: Use the version
-                run: echo "The next release version is ${{ env.version }}"
 
             -   name: Print Metadata
                 run: |
