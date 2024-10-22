@@ -85,12 +85,14 @@ jobs:
             -   name: Extract Version
                 id: extract-version
                 run: |
-                    VERSION=$(cat version.json | jq -r '.nextReleaseVersion')+${{ steps.commit-hash.outputs.commit_hash_short }}
-                    # VERSION=${{ steps.version.outputs.nextRelease.version }}+${{ steps.commit-hash.outputs.commit_hash_short }}
+                    VERSION=$(jq -r '.nextReleaseVersion' version.json)+${{ steps.commit-hash.outputs.commit_hash_short }}
                     echo "version=${VERSION}" >> $GITHUB_ENV
                     # Replace `+` with `_` for a docker-safe build tag
                     VERSION_SAFE="${VERSION//\+/_}"
                     echo "version_safe=${VERSION_SAFE}" >> $GITHUB_ENV
+            
+            -   name: Use the version
+                run: echo "The next release version is ${{ env.version }}"
 
             -   name: Print Metadata
                 run: |
