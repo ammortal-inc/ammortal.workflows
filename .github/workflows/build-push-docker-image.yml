@@ -74,12 +74,12 @@ jobs:
 
             -   name: Run Semantic Release
                 id: version
+                run: npx semantic-release --debug
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_NAME: ${{ github.repository }}
                     BRANCH_NAME: ${{ steps.branch-names-safe.outputs.branch_name }}
-                run: | 
-                    npx semantic-release --debug
+
 
             -   name: Check Semantic Release Output
                 run: |
