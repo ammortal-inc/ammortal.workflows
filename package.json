@@ -1,0 +1,14 @@
+{
+    "name": "chamber.a4.backend.test.semantic.release",
+    "version": "0.0.0",
+    "devDependencies": {
+      "semantic-release": "^21.0.0",
+      "@semantic-release/commit-analyzer": "^11.0.0",
+      "@semantic-release/release-notes-generator": "^11.0.0",
+      "@semantic-release/git": "^10.0.0",
+      "@semantic-release/exec": "^6.0.0"
+    },
+    "keywords": [],
+    "license": "ISC",
+    "private": true
+  }
