@@ -21,9 +21,8 @@ jobs:
             branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}
             commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}
             commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}
-            version: ${{ steps.version.outputs.version }}
-            version_safe: ${{ steps.version.outputs.version_safe }}
-            next_release: ${{ steps.version.outputs.nextRelease }}
+            version: ${{ env.version }}
+            version_safe: ${{ env.version_safe }}
         steps:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
@@ -90,9 +89,6 @@ jobs:
                     # Replace `+` with `_` for a docker-safe build tag
                     VERSION_SAFE="${VERSION//\+/_}"
                     echo "version_safe=${VERSION_SAFE}" >> $GITHUB_ENV
-            
-            -   name: Use the version
-                run: echo "The next release version is ${{ env.version }}"
 
             -   name: Print Metadata
                 run: |
@@ -100,8 +96,8 @@ jobs:
                     echo "branch_name_safe: ${{ steps.branch-names-safe.outputs.branch_name_safe }}"
                     echo "commit_hash: ${{ steps.commit-hash.outputs.commit_hash }}"
                     echo "commit_hash_short: ${{ steps.commit-hash.outputs.commit_hash_short }}"
-                    echo "version: ${{ steps.extract-version.outputs.version }}"
-                    echo "version_safe: ${{ steps.extract-version.outputs.version_safe }}"
+                    echo "version: ${{ env.version }}"
+                    echo "version_safe: ${{ env.version_safe }}"
 
     build-push-docker-image:
         runs-on: ubuntu-latest
