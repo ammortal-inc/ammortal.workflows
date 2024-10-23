@@ -21,7 +21,17 @@ switch (branchName) {
 module.exports = {
   branches: ['main', 'prod'],
   plugins: [
-    '@semantic-release/commit-analyzer',
+    [
+      '@semantic-release/commit-analyzer',
+      {
+        preset: 'angular',
+        parserOpts: {
+          noteKeywords: ['BREAKING CHANGE'],
+          mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+          mergeCorrespondence: ['id', 'source'],
+        },
+      },
+    ],
     '@semantic-release/release-notes-generator',
     [
       '@semantic-release/changelog',
