@@ -66,8 +66,8 @@ jobs:
             -   name: Write Package Name
                 run: |
                     PACKAGE_NAME=${{ github.repository }}
-                    cat release/package.json | jq '. += {"name" : "'${PACKAGE_NAME}'"}' > release/package.json.tmp
-                    mv release/package.json.tmp release/package.json
+                    cat semrel/package.json | jq '. += {"name" : "'${PACKAGE_NAME}'"}' > semrel/package.json.tmp
+                    mv semrel/package.json.tmp semrel/package.json
                     cat semrel/package.json
             
             -   name: Setup Node.js
