@@ -55,23 +55,18 @@ jobs:
                     COMMIT_HASH_SHORT=${COMMIT_HASH:0:7}
                     echo "commit_hash_short=${COMMIT_HASH_SHORT}" >> $GITHUB_OUTPUT
 
-            -   name: Checkout ammortal.workflows repository
+            -   name: Checkout Select Files From ammortal.workflows Repository
                 uses: actions/checkout@v4
                 with:
                     repository: ammortal-inc/ammortal.workflows
-                    path: release
+                    path: semrel
                     sparse-checkout: |
-                        .releaserc.js
-                        package.json
+                        semrel/*
 
-            -   name: Copy Common Files To Release Directory
+            -   name: Write Package Name
                 run: |
-                    ls -la
-                    cd release
-                    ls -la
-                    cd ../
                     PACKAGE_NAME=${{ github.repository }}
-                    cat release/package.json | jq '. += {"name" : "${PACKAGE_NAME}" }'
+                    cat semrel/package.json | jq '. += {"name" : "${PACKAGE_NAME}"}' > semrel/package.json
             
             -   name: Setup Node.js
                 uses: actions/setup-node@v3
@@ -80,12 +75,12 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    cd release
+                    cd semrel
                     npm install
 
             -   name: Run Semantic Release
                 id: version
-                run: npx semantic-release --debug -e ./release/.releaserc.js
+                run: npx semantic-release --debug -e ./semrel/.releaserc.js
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_ASSETS: "$(jq -r '.assets' .semrel.json)"
