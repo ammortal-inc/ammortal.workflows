@@ -62,6 +62,14 @@ jobs:
                     path: .tmp/ammortal.workflows
                     sparse-checkout: |
                         config/semrel
+            
+            -   name: Print Info
+                run: |
+                    ls -la
+                    cd .tmp
+                    ls -la
+                    cd ammortal.workflows
+                    ls -la
 
             -   name: Write Package Name
                 run: |
