@@ -30,6 +30,11 @@ module.exports = {
           mergePattern: /^Merge pull request #(\d+) from (.*)$/,
           mergeCorrespondence: ['id', 'source'],
         },
+        releaseRules: [
+          { type: 'fix', release: 'patch' },  // bugfix branch
+          { type: 'feat', release: 'minor' }, // feature branch
+          { type: 'hot', release: 'patch' },  // hotfix branch
+        ],
       },
     ],
     '@semantic-release/release-notes-generator',
