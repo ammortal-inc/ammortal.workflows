@@ -59,23 +59,15 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     repository: ammortal-inc/ammortal.workflows
-                    path: .tmp/ammortal.workflows
+                    path: semrel
                     sparse-checkout: |
                         config/semrel
-            
-            -   name: Print Info
-                run: |
-                    ls -la
-                    cd .tmp
-                    ls -la
-                    cd ammortal.workflows
-                    ls -la
 
             -   name: Write Package Name
                 run: |
                     PACKAGE_NAME=${{ github.repository }}
-                    cat .tmp/ammortal.workflows/config/semrel/package.json | jq '. += {"name" : "${PACKAGE_NAME}"}' > .tmp/ammortal.workflows/config/semrel/package.json
-                    cat .tmp/ammortal.workflows/config/semrel/package.json
+                    cat semrel/package.json | jq '. += {"name" : "${PACKAGE_NAME}"}' > semrel/package.json
+                    cat semrel/package.json
             
             -   name: Setup Node.js
                 uses: actions/setup-node@v3
@@ -84,12 +76,12 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    cd .tmp/ammortal.workflows/config/semrel
+                    cd semrel
                     npm install
 
             -   name: Run Semantic Release
                 id: version
-                run: npx semantic-release --debug -e ./.tmp/ammortal.workflows/config/semrel/.releaserc.js
+                run: npx semantic-release --debug -e ./semrel/.releaserc.js
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     REPO_ASSETS: "$(jq -r '.assets' .semrel.json)"
