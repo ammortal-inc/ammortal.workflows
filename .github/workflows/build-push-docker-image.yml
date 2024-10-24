@@ -28,7 +28,7 @@ jobs:
                 uses: actions/checkout@v4
 
             -   name: Checkout ammortal.workflows repository
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     repository: ammortal-inc/ammortal.workflows
                     path: ammortal-workflows
