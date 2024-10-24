@@ -13,9 +13,6 @@ switch (branchName) {
     tagFormat = '${version}';
     nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"}' > version.json"
     break;
-  default:
-    tagFormat = '${version}';
-    nextReleaseVersion = "echo '{\"nextReleaseVersion\": \"${nextRelease.version}\"}' > version.json"
 }
 
 module.exports = {
