@@ -27,25 +27,6 @@ jobs:
             -   name: Checkout Repository
                 uses: actions/checkout@v4
 
-            -   name: Checkout ammortal.workflows repository
-                uses: actions/checkout@v4
-                with:
-                    repository: ammortal-inc/ammortal.workflows
-                    path: ammortal-workflows
-
-            -   name: Copy Common Files To Release Directory
-                run: |
-                    mkdir release
-                    cp ammortal-workflows/.releaserc.js ./release/
-                    cp ammortal-workflows/package.json ./release/
-                    PACKAGE_NAME=${{ github.repository }}
-                    cat release/package.json | jq '. += {"name" : "${PACKAGE_NAME}" }'
-            
-            -   name: Setup Node.js
-                uses: actions/setup-node@v3
-                with:
-                    node-version: '20.8.1'
-            
             -   name: Extract Branch Name
                 id: branch-names
                 uses: ammortal-inc/branch-names@v8
@@ -73,6 +54,25 @@ jobs:
                     echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
                     COMMIT_HASH_SHORT=${COMMIT_HASH:0:7}
                     echo "commit_hash_short=${COMMIT_HASH_SHORT}" >> $GITHUB_OUTPUT
+
+            -   name: Checkout ammortal.workflows repository
+                uses: actions/checkout@v4
+                with:
+                    repository: ammortal-inc/ammortal.workflows
+                    path: ammortal-workflows
+
+            -   name: Copy Common Files To Release Directory
+                run: |
+                    mkdir release
+                    cp ammortal-workflows/.releaserc.js ./release/
+                    cp ammortal-workflows/package.json ./release/
+                    PACKAGE_NAME=${{ github.repository }}
+                    cat release/package.json | jq '. += {"name" : "${PACKAGE_NAME}" }'
+            
+            -   name: Setup Node.js
+                uses: actions/setup-node@v3
+                with:
+                    node-version: '20.8.1'
 
             -   name: Install dependencies
                 run: |
